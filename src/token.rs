@@ -1,15 +1,15 @@
 // this is so we can easily find where an error occurs
 #[derive(Debug)]
-struct Token {
-    token_type: TokenType,
-    line: usize,
-    lexeme: String,
+pub struct Token {
+    pub token_type: TokenType,
+    pub line: usize,
+    pub lexeme: String,
 }
 
 // PartialEq so we can compare tokens
 // e.g. if we expect a semicolon we can compare Token.token_type to check
 #[derive(Debug, PartialEq)]
-enum TokenType {
+pub enum TokenType {
     // single character
     Comma,
     Semicolon,
