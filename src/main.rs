@@ -22,6 +22,71 @@ fn main() {
                 line: current_line,
                 lexeme: c.to_string(),
             }),
+            ';' => tokens.push(Token {
+                token_type: TokenType::Semicolon,
+                line: current_line,
+                lexeme: c.to_string(),
+            }),
+            '"' => tokens.push(Token {
+                token_type: TokenType::DoubleQuote,
+                line: current_line,
+                lexeme: c.to_string(),
+            }),
+            '(' => tokens.push(Token {
+                token_type: TokenType::LParen,
+                line: current_line,
+                lexeme: c.to_string(),
+            }),
+            ')' => tokens.push(Token {
+                token_type: TokenType::RParen,
+                line: current_line,
+                lexeme: c.to_string(),
+            }),
+            '{' => tokens.push(Token {
+                token_type: TokenType::LBrace,
+                line: current_line,
+                lexeme: c.to_string(),
+            }),
+            '}' => tokens.push(Token {
+                token_type: TokenType::RBrace,
+                line: current_line,
+                lexeme: c.to_string(),
+            }),
+            '[' => tokens.push(Token {
+                token_type: TokenType::LBracket,
+                line: current_line,
+                lexeme: c.to_string(),
+            }),
+            ']' => tokens.push(Token {
+                token_type: TokenType::RBracket,
+                line: current_line,
+                lexeme: c.to_string(),
+            }),
+            '=' => tokens.push(Token {
+                token_type: TokenType::Equals,
+                line: current_line,
+                lexeme: c.to_string(),
+            }),
+            '-' => tokens.push(Token {
+                token_type: TokenType::Minus,
+                line: current_line,
+                lexeme: c.to_string(),
+            }),
+            '+' => tokens.push(Token {
+                token_type: TokenType::Plus,
+                line: current_line,
+                lexeme: c.to_string(),
+            }),
+            '*' => tokens.push(Token {
+                token_type: TokenType::Multiply,
+                line: current_line,
+                lexeme: c.to_string(),
+            }),
+            '/' => tokens.push(Token {
+                token_type: TokenType::Divide,
+                line: current_line,
+                lexeme: c.to_string(),
+            }),
             '\n' => current_line += 1,
             _ => println!("Invalid character at line {}", current_line),
         }
