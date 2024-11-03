@@ -20,18 +20,18 @@ pub enum TokenType {
     RBrace,
     LBracket,
     RBracket,
-    Equals,
+    Assign,
     Minus,
     Plus,
     Multiply,
     Divide,
+    LessThan,
+    GreaterThan,
 
     // double character
     Equal,
     NotEqual,
-    LessThan,
     LessEqual,
-    Greater,
     GreaterEqual,
 
     // keywords

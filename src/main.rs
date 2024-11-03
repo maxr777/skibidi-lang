@@ -15,7 +15,8 @@ fn main() {
     let mut word = String::new();
     let mut current_line = 1;
 
-    for c in source_code.chars() {
+    let mut chars = source_code.chars().peekable();
+    while let Some(c) = chars.next() {
         match c {
             ',' => tokens.push(Token {
                 token_type: TokenType::Comma,
@@ -62,11 +63,21 @@ fn main() {
                 line: current_line,
                 lexeme: c.to_string(),
             }),
-            '=' => tokens.push(Token {
-                token_type: TokenType::Equals,
-                line: current_line,
-                lexeme: c.to_string(),
-            }),
+            '=' => {
+                if chars.peek() == Some(&'=') {
+                    tokens.push(Token {
+                        token_type: TokenType::Equal,
+                        line: current_line,
+                        lexeme: c.to_string(),
+                    })
+                } else {
+                    tokens.push(Token {
+                        token_type: TokenType::Assign,
+                        line: current_line,
+                        lexeme: c.to_string(),
+                    })
+                }
+            }
             '-' => tokens.push(Token {
                 token_type: TokenType::Minus,
                 line: current_line,
@@ -84,6 +95,16 @@ fn main() {
             }),
             '/' => tokens.push(Token {
                 token_type: TokenType::Divide,
+                line: current_line,
+                lexeme: c.to_string(),
+            }),
+            '<' => tokens.push(Token {
+                token_type: TokenType::LessThan,
+                line: current_line,
+                lexeme: c.to_string(),
+            }),
+            '>' => tokens.push(Token {
+                token_type: TokenType::GreaterThan,
                 line: current_line,
                 lexeme: c.to_string(),
             }),
