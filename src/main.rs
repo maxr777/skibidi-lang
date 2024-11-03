@@ -78,6 +78,20 @@ fn main() {
                     })
                 }
             }
+            '!' => {
+                if chars.peek() == Some(&'=') {
+                    tokens.push(Token {
+                        token_type: TokenType::NotEqual,
+                        line: current_line,
+                        lexeme: c.to_string(),
+                    })
+                } else {
+                    panic!(
+                        "error at line {}: ! is not immediately followed by = (use \"NOT\" for logical not)",
+                        current_line
+                    );
+                }
+            }
             '-' => tokens.push(Token {
                 token_type: TokenType::Minus,
                 line: current_line,
@@ -98,16 +112,36 @@ fn main() {
                 line: current_line,
                 lexeme: c.to_string(),
             }),
-            '<' => tokens.push(Token {
-                token_type: TokenType::LessThan,
-                line: current_line,
-                lexeme: c.to_string(),
-            }),
-            '>' => tokens.push(Token {
-                token_type: TokenType::GreaterThan,
-                line: current_line,
-                lexeme: c.to_string(),
-            }),
+            '<' => {
+                if chars.peek() == Some(&'=') {
+                    tokens.push(Token {
+                        token_type: TokenType::LessEqual,
+                        line: current_line,
+                        lexeme: c.to_string(),
+                    })
+                } else {
+                    tokens.push(Token {
+                        token_type: TokenType::LessThan,
+                        line: current_line,
+                        lexeme: c.to_string(),
+                    })
+                }
+            }
+            '>' => {
+                if chars.peek() == Some(&'=') {
+                    tokens.push(Token {
+                        token_type: TokenType::GreaterEqual,
+                        line: current_line,
+                        lexeme: c.to_string(),
+                    })
+                } else {
+                    tokens.push(Token {
+                        token_type: TokenType::GreaterThan,
+                        line: current_line,
+                        lexeme: c.to_string(),
+                    })
+                }
+            }
             '\n' => current_line += 1,
             _ => println!("Invalid character at line {}", current_line),
         }
