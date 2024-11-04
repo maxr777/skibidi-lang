@@ -143,7 +143,18 @@ fn main() {
                 }
             }
             '\n' => current_line += 1,
-            _ => println!("Invalid character at line {}", current_line),
+            _ => {
+                if c.is_alphanumeric() {
+                } else {
+                    println!("Invalid character at line {}", current_line)
+                }
+            }
         }
     }
+
+    tokens.push(Token {
+        token_type: TokenType::EOF,
+        line: current_line,
+        lexeme: "EOF".to_string(),
+    });
 }

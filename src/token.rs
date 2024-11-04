@@ -1,3 +1,29 @@
+use std::collections::HashMap;
+use std::sync::OnceLock;
+
+static KEYWORDS: OnceLock<HashMap<&'static str, TokenType>> = OnceLock::new();
+
+fn init_KEYWORDS() -> HashMap<&'static str, TokenType> {
+    let mut map = HashMap::new();
+    map.insert("OR", TokenType::OR);
+    map.insert("AND", TokenType::AND);
+    map.insert("NOT", TokenType::NOT);
+    map.insert("func", TokenType::Function);
+    map.insert("mut", TokenType::Mutable);
+    map.insert("bool", TokenType::Bool);
+    map.insert("fp", TokenType::FloatingPoint);
+    map.insert("int", TokenType::Integer);
+    map.insert("str", TokenType::String);
+    map.insert("ret", TokenType::Return);
+    map.insert("if", TokenType::If);
+    map.insert("else", TokenType::Else);
+    map.insert("while", TokenType::While);
+    map.insert("break", TokenType::Break);
+    map.insert("continue", TokenType::Continue);
+
+    map
+}
+
 // this is so we can easily find where an error occurs
 #[derive(Debug)]
 pub struct Token {
@@ -48,7 +74,6 @@ pub enum TokenType {
     FloatingPoint,
     Integer,
     String,
-    Identifier(String),
     // conditionals
     If,
     Else,
@@ -64,6 +89,7 @@ pub enum TokenType {
     BoolLiteral(bool),
 
     // special
+    Identifier(String),
     Comment,
     EOF,
 }
