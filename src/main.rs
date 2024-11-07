@@ -1,7 +1,6 @@
 mod token;
 use std::{fs, process};
-use token::Token;
-use token::TokenType;
+use token::{Token, TokenType, KEYWORDS};
 
 fn main() {
     let source_code = fs::read_to_string("sc.txt").expect("Haven't loaded the source code");
@@ -14,6 +13,7 @@ fn main() {
     let mut tokens: Vec<Token> = Vec::new();
     let mut word = String::new();
     let mut current_line = 1;
+    let keywords_map = KEYWORDS.get().unwrap();
 
     let mut chars = source_code.chars().peekable();
     while let Some(c) = chars.next() {
@@ -145,6 +145,21 @@ fn main() {
             '\n' => current_line += 1,
             _ => {
                 if c.is_alphanumeric() {
+                    word.push(c);
+
+                    if let Some(&next_char) = chars.peek() {
+                        if !next_char.is_alphanumeric() {
+                            let word_clone = word.clone();
+                            if keywords_map.contains_key(&word.as_str()) {
+                                tokens.push(Token {
+                                    token_type: keywords_map.get(&word.as_str()).cloned().unwrap(),
+                                    line: current_line,
+                                    lexeme: word_clone,
+                                });
+                                word.clear();
+                            }
+                        }
+                    }
                 } else {
                     println!("Invalid character at line {}", current_line)
                 }

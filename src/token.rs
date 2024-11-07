@@ -1,9 +1,9 @@
 use std::collections::HashMap;
 use std::sync::OnceLock;
 
-static KEYWORDS: OnceLock<HashMap<&'static str, TokenType>> = OnceLock::new();
+pub static KEYWORDS: OnceLock<HashMap<&'static str, TokenType>> = OnceLock::new();
 
-fn init_KEYWORDS() -> HashMap<&'static str, TokenType> {
+fn init_keywords() -> HashMap<&'static str, TokenType> {
     let mut map = HashMap::new();
     map.insert("OR", TokenType::OR);
     map.insert("AND", TokenType::AND);
@@ -34,7 +34,7 @@ pub struct Token {
 
 // PartialEq so we can compare tokens
 // e.g. if we expect a semicolon we can compare Token.token_type to check
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 pub enum TokenType {
     // single character
     Comma,
