@@ -107,11 +107,23 @@ fn main() {
                 line: current_line,
                 lexeme: c.to_string(),
             }),
-            '/' => tokens.push(Token {
-                token_type: TokenType::Divide,
-                line: current_line,
-                lexeme: c.to_string(),
-            }),
+            '/' => {
+                if chars.peek() == Some(&'/') {
+                    chars.next();
+                    while let Some(&ch) = chars.peek() {
+                        if ch == '\n' {
+                            break;
+                        }
+                        chars.next();
+                    }
+                } else {
+                    tokens.push(Token {
+                        token_type: TokenType::Divide,
+                        line: current_line,
+                        lexeme: c.to_string(),
+                    })
+                }
+            }
             '<' => {
                 if chars.peek() == Some(&'=') {
                     tokens.push(Token {
@@ -157,6 +169,7 @@ fn main() {
                                     lexeme: word_clone,
                                 });
                                 word.clear();
+                            } else {
                             }
                         }
                     }
