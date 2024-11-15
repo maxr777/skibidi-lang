@@ -170,6 +170,12 @@ fn main() {
                                 });
                                 word.clear();
                             } else {
+                                tokens.push(Token {
+                                    token_type: TokenType::Identifier(word_clone.clone()),
+                                    line: current_line,
+                                    lexeme: word_clone,
+                                });
+                                word.clear()
                             }
                         }
                     }
