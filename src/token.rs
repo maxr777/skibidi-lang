@@ -90,6 +90,6 @@ pub enum TokenType {
 
     // special
     Identifier(String),
-    Comment,
+    Comment(String),
     EOF,
 }

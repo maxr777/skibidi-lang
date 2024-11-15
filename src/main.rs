@@ -110,10 +110,17 @@ fn main() {
             '/' => {
                 if chars.peek() == Some(&'/') {
                     chars.next();
+                    let mut comment_content = String::new();
                     while let Some(&ch) = chars.peek() {
                         if ch == '\n' {
+                            tokens.push(Token {
+                                token_type: TokenType::Comment(comment_content.clone()),
+                                line: current_line,
+                                lexeme: comment_content.clone(),
+                            });
                             break;
                         }
+                        comment_content.push(ch);
                         chars.next();
                     }
                 } else {
