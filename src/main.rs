@@ -11,7 +11,6 @@ fn main() {
     }
 
     let mut tokens: Vec<Token> = Vec::new();
-    let mut word = String::new();
     let mut current_line = 1;
     let keywords_map = KEYWORDS.get().unwrap();
 
@@ -28,11 +27,25 @@ fn main() {
                 line: current_line,
                 lexeme: c.to_string(),
             }),
-            '"' => tokens.push(Token {
-                token_type: TokenType::DoubleQuote,
-                line: current_line,
-                lexeme: c.to_string(),
-            }),
+            '"' => {
+                chars.next();
+                let mut word = String::new();
+
+                while let Some(next_char) = chars.peek() {
+                    if next_char == &'"' {
+                        chars.next();
+                        break;
+                    } else {
+                        word.push(next_char.clone());
+                        chars.next();
+                    }
+                }
+                tokens.push(Token {
+                    token_type: TokenType::StringLiteral(word.clone()),
+                    line: current_line,
+                    lexeme: word.clone(),
+                });
+            }
             '(' => tokens.push(Token {
                 token_type: TokenType::LParen,
                 line: current_line,
@@ -164,6 +177,7 @@ fn main() {
             '\n' => current_line += 1,
             _ => {
                 if c.is_alphanumeric() {
+                    let mut word = String::new();
                     word.push(c);
 
                     if let Some(&next_char) = chars.peek() {
