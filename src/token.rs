@@ -8,6 +8,8 @@ fn init_keywords() -> HashMap<&'static str, TokenType> {
     map.insert("OR", TokenType::OR);
     map.insert("AND", TokenType::AND);
     map.insert("NOT", TokenType::NOT);
+    map.insert("true", TokenType::TRUE);
+    map.insert("false", TokenType::FALSE);
     map.insert("func", TokenType::Function);
     map.insert("mut", TokenType::Mutable);
     map.insert("bool", TokenType::Bool);
@@ -65,6 +67,9 @@ pub enum TokenType {
     OR,
     AND,
     NOT,
+    // booleans
+    TRUE,
+    FALSE,
     // functions
     Function,
     Return,
@@ -86,7 +91,6 @@ pub enum TokenType {
     IntegerLiteral(i64),
     FloatingPointLiteral(f64),
     StringLiteral(String),
-    BoolLiteral(bool),
 
     // special
     Identifier(String),

@@ -168,19 +168,18 @@ fn main() {
 
                     if let Some(&next_char) = chars.peek() {
                         if !next_char.is_alphanumeric() {
-                            let word_clone = word.clone();
                             if keywords_map.contains_key(&word.as_str()) {
                                 tokens.push(Token {
                                     token_type: keywords_map.get(&word.as_str()).cloned().unwrap(),
                                     line: current_line,
-                                    lexeme: word_clone,
+                                    lexeme: word.clone(),
                                 });
                                 word.clear();
                             } else {
                                 tokens.push(Token {
-                                    token_type: TokenType::Identifier(word_clone.clone()),
+                                    token_type: TokenType::Identifier(word.clone()),
                                     line: current_line,
-                                    lexeme: word_clone,
+                                    lexeme: word.clone(),
                                 });
                                 word.clear()
                             }
